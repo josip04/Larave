@@ -72,7 +72,7 @@ class PostsController extends Controller
     public function edit(Posts $post)
     {
         //if($post->user_id !== Auth::user()->id) abort(401); //AuthPolicy
-        $this->authorize('update',$post); // edit == update
+        //$this->authorize('update',$post); // edit == update , set as global based Authorizaton
         return view('posts.edit',[
             'post' => Posts::where('id',$post->id)->firstOrFail()
         ]);

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Posts;
 use App\Models\Comments;
-
 use Illuminate\Http\Request;
+use App\Http\Requests\PostFormRequest;
 
 class PostsController extends Controller
 {
@@ -38,13 +38,12 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostFormRequest $request)
     {
         //ddd($request->image);
-        $post = $this->validatePost();
-        $post = Posts::create([
-            'title' => $post['title'],
-            'body' => $post['body'],
+        Posts::create([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
             'user_id' => Auth::user()->id,
             'image' => $request->image->store('images')
         ]);
@@ -85,14 +84,14 @@ class PostsController extends Controller
      * @param  \App\Models\Posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Posts $post)
+    public function update(PostFormRequest $request, Posts $post)
     {
         //if($post->user_id !== Auth::user()->id) abort(401); //AuthPolicy
         $this->authorize('update',$post);
         if($request->image){
             $post['image'] = $request->image->store('images');
         }
-        $post->update($this->validatePost());
+        $post->update($request->validated());
 
         return redirect()->route('posts.index');
     }
@@ -110,10 +109,12 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
     }
 
+
+    /* form request validation relocated to Requests folder
     protected function validatePost(){
         return request()->validate([
             'title' => 'required',
             'body' => 'required',
         ]);
-    }
+    }*/
 }

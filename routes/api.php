@@ -6,6 +6,9 @@ use App\Models\Posts;
 use App\Models\Comments;
 use App\Http\Controllers\CommentsController;
 
+
+use App\Http\Controllers\PostsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +20,7 @@ use App\Http\Controllers\CommentsController;
 |
 */
 
+Route::post('/posts',[PostsController::class,'store'])->name('post.store');
 Route::/*middleware('auth:api')->*/get('/posts',function(Request $request){
     return Posts::all();
 });

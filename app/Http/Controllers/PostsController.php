@@ -90,10 +90,12 @@ class PostsController extends Controller
     {
         //if($post->user_id !== Auth::user()->id) abort(401); //AuthPolicy
         $this->authorize('update',$post);
+        
+        $post = $request->validated();
         if($request->image){
             $post['image'] = $request->image->store('images');
         }
-        $post->update($request->validated());
+        $post->update($post);
 
         return redirect()->route('posts.index');
     }

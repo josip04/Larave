@@ -41,9 +41,11 @@ class PostsController extends Controller
     public function store(PostFormRequest $request)
     {
         //ddd($request->image);
+        $post = $request->validated();
+
         Posts::create([
-            'title' => $request->input('title'),
-            'body' => $request->input('body'),
+            'title' => $post['title'],
+            'body' => $post['body'],
             'user_id' => Auth::user()->id,
             'image' => $request->image->store('images')
         ]);

@@ -20,7 +20,7 @@ use App\Http\Controllers\PostsController;
 |
 */
 
-Route::post('/posts',[PostsController::class,'store'])->name('post.store');
+
 Route::/*middleware('auth:api')->*/get('/posts',function(Request $request){
     return Posts::all();
 });

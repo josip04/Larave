@@ -18,7 +18,7 @@ class Posts extends Model
         return $this->hasMany(Comments::class,'post_id');
     }
 
-    public function getImageAttribute($value){
-        return asset('storage/'.$value) ;
-    }
+    // public function getImageAttribute($value){
+    //     return asset('storage/'.$value);
+    // }
 }

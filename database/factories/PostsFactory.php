@@ -23,7 +23,12 @@ class PostsFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->paragraph,
+            /**
+             * for title paragraph gives error
+             * 1406 data too long for column title
+             * this is why we use sentence
+             */
+            'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
             'image' => $this->faker->sentence,
             'user_id' => User::all()->random()->id

@@ -18,7 +18,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Posts::where('user_id',Auth::user()->id)->get();
-        
+
         return view('posts.userPosts',['posts' => $posts]);
     }
 
@@ -49,7 +49,7 @@ class PostsController extends Controller
             'user_id' => Auth::user()->id,
             'image' => $request->image->store('images')
         ]);
-        
+
         return redirect()->route('posts.index');
     }
 
